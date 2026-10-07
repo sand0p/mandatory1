@@ -202,13 +202,16 @@ class Wave2D:
 
 class Wave2D_Neumann(Wave2D):
     def D2(self, N: int) -> sparse.lil_matrix:
-        raise NotImplementedError("The D2 method is not implemented yet.")
+        D = super().D2(N)
+        D[0, 1] = 2 * N**2
+        D[-1, -2] = 2 * N**2
+        return D
 
     def ue(self, mx: int, my: int) -> sp.Expr:
-        raise NotImplementedError("The ue method is not implemented yet.")
+        return sp.cos(mx * sp.pi * x) * sp.cos(my * sp.pi * y) * sp.cos(self.w * t)
 
     def apply_bcs(self, u: np.ndarray):
-        raise NotImplementedError("The apply_bcs method is not implemented yet.")
+        pass
 
 
 def test_convergence_wave2d():
@@ -224,8 +227,13 @@ def test_convergence_wave2d_neumann():
 
 
 def test_exact_wave2d():
-    raise NotImplementedError("The test_exact_wave2d function is not implemented yet.")
+    for solver in (Wave2D(), Wave2D_Neumann()):
+        for m in (1, 2, 3):
+            _, err = solver(32, 100, cfl=1 / np.sqrt(2), mx=m, my=m)
+            assert np.max(err) < 1e-12, np.max(err)
 
 if __name__=='__main__':
     test_convergence_wave2d()
+    test_convergence_wave2d_neumann()
+    test_exact_wave2d()
     print('test passed!')

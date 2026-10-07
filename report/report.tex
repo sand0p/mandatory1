@@ -1,0 +1,86 @@
+\documentclass[12pt]{scrartcl}
+\usepackage[nopatch=footnote]{microtype}
+
+\usepackage{evan}
+\usepackage{graphicx,amsmath,amssymb,setspace}
+
+\newcommand{\gA}{\mathfrak{A}}
+\newcommand{\gB}{\mathfrak{B}}
+\newcommand{\cL}{\mathcal{L}}
+
+\begin{document}
+
+\title{MATMEK420 Assignment 1}
+\author{Sander Oppen}
+\date{\today}
+\maketitle
+
+\subsection*{1.2.3. Exact solution}
+We begin by finding the partial derivatives for $u$, starting with $t$.
+\begin{align*}
+    \frac{\partial u}{\partial t}&= e^{\imath (k_xx+k_yy)}(-\imath \omega)e^{-\imath\omega t}=-\imath\omega u\\
+    \frac{\partial^2 u}{\partial t^2} &= (-\imath \omega)^2u = -\omega^2 u. 
+\end{align*}
+Next, for the derivatives for $x$ and $y$ (I have skipped some steps when calculating, they are the same as the previous scenario).
+\begin{align*}
+    \frac{\partial u}{\partial x}&= \imath k_x u\\
+    \frac{\partial^2 u}{\partial x^2} &= (\imath k_x)^2u = -k_x^2 u. \\
+    \frac{\partial u}{\partial y}&= \imath k_y u\\
+    \frac{\partial^2 u}{\partial y^2} &= (\imath k_y)^2u = -k_y^2 u. 
+\end{align*}
+Putting all these into the wave equation, we get
+\begin{equation}
+    -\omega^2 u = c^2\big( -k_x^2u -k_y^2u\big).
+\end{equation}
+Since $u$ has no zeroes, we know that the wave equation holds if and only is we have $\omega = \pm c\sqrt{k_x^2+k_y^2}$.
+
+\newpage
+\subsection*{1.2.4. Dispersion coefficient}
+We begin by finding the required values for $u_{ij}^n$, starting with $n+1$ and $n-1$.
+\begin{align*}
+    u_{ij}^{n+1}&= e^{\imath(kh(i+j)-\tilde{\omega}(n+1)\Delta t)} = e^{-\imath\tilde{\omega}\Delta t}u_{ij}^n\\
+    u_{ij}^{n-1}&= e^{\imath\tilde{\omega}\Delta t}u_{ij}^n.
+\end{align*}
+Next, for $i\pm1$ and $j\pm 1$ (I have again skipped some steps when calculating, they are the same as the previous scenario):
+\begin{align*}
+    u_{i+1,j}^n&= e^{\imath kh}u_{ij}^n\\
+    u_{i-1,j}^n&= e^{-\imath kh}u_{ij}^n\\
+    u_{i,j+1}^n&= e^{\imath kh}u_{ij}^n\\
+    u_{i,j-1}^n&= e^{-\imath kh}u_{ij}^n.
+\end{align*}
+Putting all these into equation (1.3) from the problem statement, we get
+\begin{equation}
+    \frac{e^{-\imath\tilde{\omega}\Delta t}-2+e^{\imath\tilde{\omega}\Delta t}}{\Delta t^2} = \frac{2c^2}{h^2}\bigl(e^{\imath kh}-2+e^{-\imath kh}\bigr).
+\end{equation}
+Using $e^{\imath a}+e^{-\imath a}=2\cos(a)$, we get
+\begin{equation*}
+    \frac{2\cos(\tilde{\omega}\Delta t)-2}{\Delta t^2} = \frac{2c^2}{h^2}\bigl( 2\cos(kh)-2 \bigr),
+\end{equation*}
+and by further using $\cos(a)-1=-2\sin^2\bigl(\frac{a}{2}\bigr)$, we get
+\begin{align*}
+    -\frac{4}{\Delta t^2}\sin^2\biggl(\frac{\tilde{\omega}\Delta t}{2}\biggr)&= -\frac{8c^2}{h^2}\sin^2\biggl(\frac{kh}{2}\biggr)\\
+    \sin^2\biggl(\frac{\tilde{\omega}\Delta t}{2}\biggr)&= \frac{8c^2\Delta t^2}{4h^2}\sin^2\biggl(\frac{kh}{2}\biggr)\\
+    \sin^2\biggl(\frac{\tilde{\omega}\Delta t}{2}\biggr)&=2C^2\sin^2(kh/2).
+\end{align*}
+In the last step we have used the substitution $C=\frac{c\Delta t}{h}$. For $C=\frac{1}{\sqrt{2}}$, this becomes
+\begin{equation}
+    \sin^2\biggl(\frac{\tilde{\omega}\Delta t}{2}\biggr) = \sin^2\biggl(\frac{kh}{2}\biggr).
+\end{equation}
+From this, we know that
+\begin{align*}
+    \frac{\tilde{\omega}\Delta t}{2}&=\frac{kh}{2}\\
+    \tilde{\omega}&=\frac{kh}{\Delta t}.
+\end{align*}
+Going back to our constant $C$, we can express $\Delta t$ as 
+\begin{equation*}
+    \Delta t = \frac{h}{\sqrt{2}c}
+\end{equation*}
+Putting this into our previous expression for $\tilde{\omega}$, we get
+\begin{equation*}
+    \tilde{\omega}=\sqrt{2}ck.
+\end{equation*}
+Looking back at what we found in the previous problem, by setting $k_x = k_y = k$, we get that 
+\begin{equation*}
+    \omega=c\sqrt{2k^2}=\sqrt{2}ck = \tilde{\omega}.
+\end{equation*}
+\end{document}
